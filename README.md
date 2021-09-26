@@ -3,7 +3,7 @@
 This is a simple application to demonstrate how to stream videos from AWS S3, to Facebook Live Video.
 
 I created it as a proof of concept, that I could utilise AWS services, whilst still being cheaper than a digital ocean
-VPS for a full month.
+VPS.
 
 Based on this project, if you were to stream 8 hour-long videos per month (assuming they're around 2.5GB each), you'd
 end up with the following costs:
@@ -70,3 +70,7 @@ It then persists the request to DynamoDB, along with the requested date/time
 
 Finally, it runs an ECS Task, which execute the `ffmpeg-streamer-image` service on AWS Fargate.
 
+You could either manually invoke the Lambda function using the AWS Console, or bind it to an API Gateway, and submit a 
+cURL request, especially if you have predictable filenames for your videos, as I do: 
+
+`curl -X POST https://redacted.execute-api.eu-west-2.amazonaws.com/production -H "Content-type: application/json" -d {"bucket": "my-streaming-bucket", "path": "/videos/2021/09/my-first-video.mp4", "token": "FB-145652124440674-0-Abx48VAJXUXY"}`
